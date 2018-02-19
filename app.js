@@ -16,6 +16,14 @@ const  game = document.getElementById('game'),
 minNum.textContent = min;
 maxNum.textContent = max;
 
+// Play again event listener
+// Need to be 'mousedown' to display the Game Over message before
+game.addEventListener('mousedown', function(e){
+  if(e.target.className === 'play-again'){
+    window.location.reload();
+  }
+});
+
 // Assign Event Listener for guess
 guessBtn.addEventListener('click', function(){
   // Parse string to integer for validation
@@ -60,6 +68,12 @@ function gameOver(won, msg){
   guessInput.style.borderColor = color;
   // Message for the end of the Game
   setMessage(msg, color);
+
+  // Play Again?
+  guessBtn.value = 'Play Again';
+  // Add class name 
+  guessBtn.className = 'play-again';
+
 }
 
 // Set message
