@@ -20,7 +20,6 @@ maxNum.textContent = max;
 guessBtn.addEventListener('click', function(){
   // Parse string to integer for validation
   let guess = parseInt(guessInput.value);
-  console.log(guess);
 
   // Validate
   if(isNaN(guess) || guess < min || guess > max){
@@ -30,26 +29,18 @@ guessBtn.addEventListener('click', function(){
     // Check the Guess
     if(guess === winningNum){
       // Game Over - Won
-      // Disable input
-      guessInput.disabled = true;
-      // Change border color
-      guessInput.style.borderColor = 'green';
-      // Set message
-      setMessage(`${winningNum} is correct, You WIN!`, 'green');
+      gameOver(true, `${winningNum} is correct, You WIN!`)
     } else{
       // Wrong number
       guessesLeft -= 1;
       if(guessesLeft === 0){
         // Game Over - Lost
-        // Disable input
-        guessInput.disabled = true;
-        // Change border color
-        guessInput.style.borderColor = 'red';
-        // Set message
-        setMessage(`Game Over, you lost. The correct number was ${winningNum}`, 'red');
+        gameOver(false, `Game Over, you lost. The correct number was ${winningNum}`);
       } else{
         // Game Continues - Wrong Answer
-        // Set message
+        // Clear Input
+        guessInput.value = '';
+        // Message for another try
         setMessage(`${guess} is not correct. ${guessesLeft} guesses left`, 'red');
       }
     }
@@ -57,6 +48,19 @@ guessBtn.addEventListener('click', function(){
   }
 
 });
+
+// Game Over
+function gameOver(won, msg){
+  let color;
+  won === true ? color = 'green' : color = 'red';
+
+  // Disable input
+  guessInput.disabled = true;
+  // Change border color
+  guessInput.style.borderColor = color;
+  // Message for the end of the Game
+  setMessage(msg, color);
+}
 
 // Set message
 function setMessage(msg, color){
